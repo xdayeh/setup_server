@@ -72,12 +72,12 @@ sudo a2ensite "$WEBSITE.conf" || error_exit "Failed to enable site $WEBSITE."
 # Test the Apache configuration before reloading
 check_apache_config
 
-# Reload Apache only if configuration is valid
-sudo systemctl reload apache2 || error_exit "Failed to reload Apache."
+# Restart Apache only if configuration is valid
+sudo systemctl restart apache2 || error_exit "Failed to restart Apache."
 
 # Enable the rewrite module and restart Apache
 sudo a2enmod rewrite || error_exit "Failed to enable rewrite module."
-sudo systemctl restart apache2 || error_exit "Failed to restart Apache."
+sudo systemctl reload apache2 || error_exit "Failed to reload Apache."
 
 # Update /etc/hosts
 if ! grep -q "$HOST_ENTRY" /etc/hosts; then
